@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: stock-market-recommender
+  datasource:
+    url: jdbc:h2:mem:stocks;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  thymeleaf:
+    cache: false
+
+api:
+  finnhub:
+    base-url: https://finnhub.io/api/v1
+    key: ${FINNHUB_API_KEY:}
+  alphavantage:
+    base-url: https://www.alphavantage.co/query
+    key: ${ALPHAVANTAGE_API_KEY:}
+
+app:
+  scheduler:
+    cron: ${DAILY_ANALYSIS_CRON:0 5 1 * * *}
+
+logging:
+  level:
+    com.example.stockdashboard: INFO

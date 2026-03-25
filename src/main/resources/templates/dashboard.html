@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock Market Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}" href="/css/dashboard.css" />
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Daily Stock Prediction Dashboard</h1>
+        <form method="post" th:action="@{/analyze}">
+            <button type="submit">Run Analysis</button>
+        </form>
+    </header>
+
+    <section>
+        <h2>Stock Predictions</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Price</th>
+                <th>Trend</th>
+                <th>Sentiment</th>
+                <th>Prediction</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${#lists.isEmpty(rows)}">
+                <td colspan="5">No data yet. Click "Run Analysis".</td>
+            </tr>
+            <tr th:each="row : ${rows}">
+                <td th:text="${row.symbol}">RELIANCE</td>
+                <td th:text="${row.price}">102.23</td>
+                <td th:text="${row.trend}">UP</td>
+                <td th:text="${row.sentimentScore}">3</td>
+                <td><span class="tag" th:text="${row.prediction}">BUY</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>Latest News</h2>
+        <div class="news-grid">
+            <article class="news-card" th:each="item : ${news}">
+                <h3 th:text="${item.title}">Headline</h3>
+                <p th:text="${item.description}">Summary...</p>
+                <p>
+                    <strong>Symbol:</strong> <span th:text="${item.relatedSymbol}">TCS</span>
+                    <strong>Sector:</strong> <span th:text="${item.sector}">Tech</span>
+                    <strong>Sentiment:</strong>
+                    <span th:text="${item.sentimentScore}">1</span>
+                </p>
+            </article>
+        </div>
+    </section>
+</div>
+</body>
+</html>
